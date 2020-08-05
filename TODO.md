@@ -4,9 +4,9 @@
 
 2. The application should be responsive and work both on desktop and mobile devices
 
-3. Use this API: https://github.com/netguru/heroes-api It exposes both REST and GraphQL services. It's up to you which one you chose.
+3. Use this API: [api](https://github.com/netguru/heroes-api) It exposes both REST and GraphQL services. It's up to you which one you chose.
 
-4. Your app should look more or less like on the designs: https://netguru.invisionapp.com/share/8YU95KFGH9C.  It doesn't have to be pixel-perfect :) (designs contain views for both desktop and mobile screens)
+4. Your app should look more or less like on the designs: [designs](https://netguru.invisionapp.com/share/8YU95KFGH9C).  It doesn't have to be pixel-perfect :) (designs contain views for both desktop and mobile screens)
 
 	4.1. Heroes view
 		a. User should be able to see a list of heroes along with their avatar, name, type, and description
