@@ -1,0 +1,36 @@
+@import "../../styles/variables";
+
+@mixin theme($color) {
+	background: $color;
+	&:hover {
+		background: darken($color, 20);
+	}
+}
+
+.button {
+	transition: background $t $e;
+
+	display: inline-block;
+
+	height: 35px;
+	padding: 0 15px;
+	&.setWidth {
+		width: 120px;
+		text-align: center;
+	}
+
+	border: none;
+	border-radius: $br;
+
+	color: $white;
+	font-size: 13px;
+	font-weight: 600;
+	line-height: 35px;
+
+	@include theme($blue);
+	&.green {
+		@include theme($green);
+	}
+
+	cursor: pointer;
+}

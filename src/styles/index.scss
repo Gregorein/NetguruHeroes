@@ -2,8 +2,16 @@
 @import "variables";
 
 html, body {
+	height: 100%;
+	width: 100%;
+
 	font-family: $fontFamily;
 
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+	height: 100%;
+	width: 100%;
 }

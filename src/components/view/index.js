@@ -1,12 +1,16 @@
-import React from "react"
+import React, {useEffect} from "react"
 
-import style from "./style.scss"
+import cn from "classnames"
 
-const View = ({children, title}) => {
-	document.title = title
+import style from "./style.module.scss"
+
+const View = ({title, className, children}) => {
+	useEffect(() => {
+		document.title = title
+	}, [title])
 
 	return (
-		<div class={style.view}>
+		<div className={cn(style.view, className)}>
 			{children}
 		</div>
 	)
