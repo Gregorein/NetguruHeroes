@@ -31,28 +31,30 @@
 
     .title {
       font-size: 14px;
-      font-weight: 800;
+      font-weight: 700;
     }
     .close {
       transition: background $t $e,
                   color $t $e;
 
-      height: 30px;
-      width: 30px;
-      margin: -8px;
+      height: 34px;
+      width: 34px;
+      margin: -10px;
 
       border-radius: $br;
 
       color: $gray;
-      font-weight: 800;   
-      line-height: 30px;
+      font-family: monospace;
+      font-size: 21px;
+      font-weight: 400;   
+      line-height: 34px;
       text-decoration: none;
       text-align: center;
 
       background: transparent;
 
       &:hover {
-        background: $gray;
+        background: transparentize($gray, 0.5);
         color: $white;
       }
     }

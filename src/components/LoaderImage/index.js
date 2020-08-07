@@ -24,7 +24,7 @@ const LoaderImage = ({className, url, alt=""}) => {
 			{loaded ? (
 				<img
 					className={style.image}
-					src={img.src}
+					src={url}
 					alt={alt}
 					/>
 			) : (

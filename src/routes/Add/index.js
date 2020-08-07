@@ -1,5 +1,13 @@
-import React, {useState} from "react"
+import React, {
+  useState,
+  useEffect,
+} from "react"
 import Select from "react-select" // using deprecated API, watch https://github.com/JedWatson/react-select/issues/4094
+import {
+  useQuery,
+  useMutation,
+  gql,
+} from "@apollo/client"
 
 import Modal from "components/Modal"
 import LoaderImage from "components/LoaderImage"
@@ -7,15 +15,109 @@ import Button from "components/Button"
 
 import style from "./style.module.scss"
 
+const TYPES = gql`
+  query {
+    types {
+      value: id
+      label: name
+    }
+  }
+  `
+const ADD_HERO = gql`
+  mutation AddHero(
+    $avatar_url: String!
+    $full_name: String!
+    $type_id: ID!
+    $description: String!
+  ) {
+    createNewHero(
+      avatar_url: $avatar_url,
+      full_name: $full_name,
+      type_id: $type_id
+      description: $description
+    ) {
+      avatar_url
+      full_name
+      description
+      type {
+        id
+      }
+    }
+  }
+  `
+
+const TextInput = ({name, label, value, onChange}) => (
+  <>
+    <label
+      className={style.label}
+      htmlFor={name}
+      children={label}
+      />
+    <input 
+      className={style.textInput}
+      type="text"
+      name={name}
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      />    
+  </>
+)
+const SelectInput = ({name, label, onChange, ...otherProps}) => (
+  <>
+    <label
+      className={style.label}
+      htmlFor={name}
+      children={label}
+      />
+    <Select
+      className={style.selectInput}
+      classNamePrefix="selectInput"
+      name={name}
+      onChange={e => onChange(e.value)}
+      {...otherProps}
+      />    
+  </>
+)
+const TextArea = ({name, label, value, onChange}) => (
+  <>
+    <label
+      className={style.label}
+      htmlFor={name}
+      children={label}
+      />
+    <textarea 
+      className={style.textInput}
+      type="text"
+      name={name}
+      value={value}
+      onChange={e => onChange(e.target.value)}
+      />    
+  </>
+)
+
 const Add = () => {
-  const [url, setUrl] = useState("")
-  const [name, setName] = useState("")
-  // const [type, setType] = useState(undefined)
+  const [avatar_url, setAvatarUrl] = useState("")
+  const [full_name, setFullName] = useState("")
+  const [type_id, setType] = useState(undefined)
+  const [types, setTypes] = useState([])
   const [description, setDescription] = useState("")
 
+  const {data} = useQuery(TYPES, {
+    fetchPolicy: "cache-and-network",
+  })
+  useEffect(() => {
+    if (data) setTypes([...data.types])
+  }, [data])
+
+  const [addHero] = useMutation(ADD_HERO)
   const handleSubmit = e => {
     e.preventDefault()
-    console.log("handleSubmit")
+    addHero({variables: {
+      avatar_url,
+      full_name,
+      type_id,
+      description
+    }})
   }
 
   return (
@@ -29,55 +131,36 @@ const Add = () => {
         >
         <LoaderImage
           className={style.avatar}
-          url={url}
+          url={avatar_url}
           />
-        <label
-          className={style.label}
-          htmlFor="avatar"
-          children="Avatar URL"
-          />
-        <input 
-          className={style.textInput}
-          type="text"
+
+        <TextInput
           name="avatar"
-          value={url}
-          onChange={e => setUrl(e.target.value)}
+          label="Avatar URL"
+          value={avatar_url}
+          onChange={setAvatarUrl}
           />
 
-        <label
-          className={style.label}
-          htmlFor="name"
-          children="Full name"
-          />
-        <input 
-          className={style.textInput}
-          type="text"
-          name="name"
-          value={name}
-          onChange={e => setName(e.target.value)}
+        <TextInput
+          name="full_name"
+          label="Full name"
+          value={full_name}
+          onChange={setFullName}
           />
 
-        <label
-          className={style.label}
-          htmlFor="type"
-          children="Type"
-          />
-        <Select
-          options={[1,2,3]}
+        <SelectInput
           name="type"
+          label="Type"
+          options={types}
+          onChange={setType}
           placeholder="Select type"
           />
 
-        <label
-          className={style.label}
-          htmlFor="description"
-          children="Description"
-          />
-        <textarea
-          className={style.textArea}
+        <TextArea
           name="description"
+          label="Description"
           value={description}
-          onChange={e => setDescription(e.target.value)}
+          onChange={setDescription}
           />
 
         <Button

@@ -14,7 +14,7 @@ const Modal = ({returnTo="/", title, children}) => createPortal(
           className={style.close}
           to={returnTo}
           >
-          ⨯
+          &times;
         </Link>
       </header>
       <div className={style.body}>
