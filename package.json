@@ -17,14 +17,17 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "classnames": "^2.2.6",
+    "customize-cra": "^1.0.0",
     "node-sass": "^4.14.1",
-    "react-scripts": "3.4.1"
+    "react-app-rewired": "^2.1.6",
+    "react-scripts": "3.4.1",
+    "react-select": "^3.1.0"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -5,17 +5,17 @@ import {
   Route
 } from "react-router-dom"
 
-import Home from "./routes/Home"
-import Add from "./routes/Add"
-import Details from "./routes/Details"
+import Home from "routes/Home"
+import Page404 from "routes/Page404"
 
 function App() {
   return (
     <Router>
       <Switch>
-        <Route exact path="/" children={<Home />} />
-        <Route path="/add" children={<Add />} />
-        <Route path="/details/:id" children={<Details />} />
+        <Route exact path="/" component={Home} />
+        <Route path="/add" component={Home} />
+        <Route path="/details/:id" component={Home} />
+        <Route component={Page404} />
       </Switch>
     </Router>
   )
