@@ -5,10 +5,11 @@ import cn from "classnames"
 
 import style from "./style.module.scss"
 
-const Button =({color="default", type="button", onClick, autoWidth=false, to="/", children}) => type === "link" ? (
+const Button =({color="default", type="button", bordered, autoWidth=false, to="/", onClick, children}) => type === "link" ? (
 	<Link
 		className={cn(style.button, {
 			[style[color]]: color !== "default",
+			[style.bordered]: bordered,
 			[style.setWidth]: !autoWidth,
 		})}
 		to={to}

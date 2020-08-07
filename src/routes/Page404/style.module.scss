@@ -1,0 +1,19 @@
+@import "../../styles/variables";
+
+.view {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .title {
+    color: $blue;
+    font-size: 120px;
+    font-weight: 900;
+  }
+  .description {
+    margin-bottom: 35px;
+
+    font-size: 22px;
+  }
+}

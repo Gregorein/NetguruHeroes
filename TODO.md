@@ -39,6 +39,6 @@
 	– Hero Details modal should be accessible by manually entering the page using its URL address (e.g. /details/:id)
 	
 8. Tests:
-	– You don't have to aim for 100% code coverage, but we'd love to see your skill in this field. So please test at least one feature. You can use Jest + enzyme/react-resting-library for this. 
+	– You don't have to aim for 100% code coverage, but we'd love to see your skill in this field. So please test at least one feature. You can use react-resting-library for this. 
 
 END: Once you’re ready to show us your work, pack the client application to dropbox or drive and send the link over by email.

@@ -1,10 +1,23 @@
 @import "../../styles/variables";
 
-@mixin theme($color) {
-	background: $color;
-	&:hover {
-		background: darken($color, 20);
-		color: $white;
+@mixin theme-filled($color) {
+	&:not(.bordered) {
+		background: $color;
+		&:hover {
+			background: darken($color, 20);
+			color: $white;
+		}		
+	}
+
+	&.bordered {
+		color: $color;
+		border-color: $color;
+
+		&:hover {
+			color: darken($color, 10);
+			border-color: darken($color, 20);
+			background: transparentize($color, 0.85);
+		}
 	}
 }
 
@@ -15,25 +28,28 @@
 	display: inline-block;
 
 	height: 35px;
-	padding: 0 15px;
+	padding: 0 20px;
 	&.setWidth {
 		width: 120px;
 		text-align: center;
 	}
 
-	border: none;
 	border-radius: $br;
+	border: none;
+	&.bordered {
+		border: 1px solid transparent;
+	}	
+
+	@include theme-filled($blue);
+	&.green {
+		@include theme-filled($green);
+	}
 
 	color: $light;
 	font-size: 13px;
-	font-weight: 600;
+	font-weight: 700;
 	line-height: 35px;
 	text-decoration: none;
-
-	@include theme($blue);
-	&.green {
-		@include theme($green);
-	}
 
 	cursor: pointer;
 }
