@@ -8,17 +8,15 @@ import {
 import Home from "routes/Home"
 import Page404 from "routes/Page404"
 
-function App() {
-  return (
-    <Router>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/add" component={Home} />
-        <Route path="/details/:id" component={Home} />
-        <Route component={Page404} />
-      </Switch>
-    </Router>
-  )
-}
+const App = () => (
+  <Router>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route path="/add" component={Home} />
+      <Route path="/details/:id" component={Home} />
+      <Route component={Page404} />
+    </Switch>
+  </Router>
+)
 
 export default App

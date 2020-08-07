@@ -1,8 +1,4 @@
-import React, {
-	useState,
-	useEffect,
-	useCallback,
-} from "react"
+import React from "react"
 import {Route} from "react-router-dom"
 import {
 	useQuery,
@@ -19,10 +15,10 @@ import style from "./style.module.scss"
 
 const HEROES = gql`
 	query Heroes(
-		$limit: Int
-		$offset: Int
+		$first: Int
+		$skip: Int
 	) {
-		heroes: heroes(first: $limit, skip: $offset) {
+		heroes(first: $first, skip: $skip) {
 			total_count
 			data {
 				avatar_url
@@ -37,25 +33,21 @@ const HEROES = gql`
 	`
 
 const Home = () => {
-	const [heroes, setHeroes] = useState([])
-	const limit = 5
-	const [offset, setOffset] = useState(0)
-	const {data, refetch} = useQuery(HEROES, {
-		variables: {limit, offset},
+	const {data, fetchMore} = useQuery(HEROES, {
+		variables: {
+			first: 5,
+			skip: 0
+		},
 		fetchPolicy: "cache-and-network"
 	})
-	useEffect(() => {
-		if (data) setHeroes(heroes => [...heroes, ...data.heroes.data])
-	}, [data])
+	const handleLoadMore = () => fetchMore({
+		variables: {
+			skip: data.heroes.data.length
+		}
+	})
 
-	const handleLoadMore = useCallback(
-		() => setOffset(offset +limit),
-		[offset]
-	)
+	const visible = data && data.heroes.total_count > data.heroes.data.length
 
-	const handleRefetch = () => refetch()
-
-	const visible = heroes.length > 0 && (data && data.heroes.total_count > heroes.length)
 	return (
 		<View title="Netguru Heroes" className={style.container}>
 			<header className={style.header}>
@@ -67,14 +59,13 @@ const Home = () => {
 					>
 					<span className={style.icon}>+</span> Add hero
 				</Button>
-				<Button onClick={handleRefetch} children={"refetch"} />
 				<Route path="/add" component={Add } />
 			</header>
 			<main className={style.list}>
-				<HeroList list={heroes} fakeItem={1} />
+				<HeroList list={data ? data.heroes.data : []} fakeItem={1} />
 				{visible && (
 					<footer className={style.footer}>
-						<Button onClick={handleLoadMore} children={"Load more"} />
+						<Button onClick={(handleLoadMore)} children={"Load more"} />
 					</footer>
 				)}
 			</main>
