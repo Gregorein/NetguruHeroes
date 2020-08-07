@@ -33,18 +33,37 @@ const HEROES = gql`
 	`
 
 const Home = () => {
-	const {data, fetchMore} = useQuery(HEROES, {
+	const {data, fetchMore, refetch} = useQuery(HEROES, {
 		variables: {
-			first: 5,
+			first: 10,
 			skip: 0
 		},
-		fetchPolicy: "cache-and-network"
 	})
 	const handleLoadMore = () => fetchMore({
 		variables: {
 			skip: data.heroes.data.length
-		}
+		},
+		updateQuery: (existing, {fetchMoreResult: incoming}) => {
+			if (!incoming) return existing
+			return {
+				heroes: {
+					...existing.heroes,
+					...incoming.heroes,
+					data: [
+						...existing.heroes.data,
+						...incoming.heroes.data,
+					],
+				}
+			}
+		},
 	})
+	const handleRefetch = () => {
+		refetch({
+			variables: {
+				skip: 0
+			}
+		})
+	}
 
 	const visible = data && data.heroes.total_count > data.heroes.data.length
 
@@ -59,13 +78,13 @@ const Home = () => {
 					>
 					<span className={style.icon}>+</span> Add hero
 				</Button>
-				<Route path="/add" component={Add } />
+				<Route path="/add" component={(props) => <Add handleRefetch={handleRefetch} {...props} />} />
 			</header>
 			<main className={style.list}>
 				<HeroList list={data ? data.heroes.data : []} fakeItem={1} />
 				{visible && (
 					<footer className={style.footer}>
-						<Button onClick={(handleLoadMore)} children={"Load more"} />
+						<Button onClick={handleLoadMore} children={"Load more"} />
 					</footer>
 				)}
 			</main>

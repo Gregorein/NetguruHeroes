@@ -9,28 +9,7 @@ import "./styles/index.scss"
 
 const client = new ApolloClient({
 	uri: "http://localhost:4000/",
-	cache: new InMemoryCache({
-		typePolicies: {
-			Query: {
-				fields: {
-					heroes: {
-						keyArgs: false,
-						merge: (existing, incoming) => {
-							if (!existing) return incoming
-
-							return {
-								...incoming,
-								data: [
-									...existing.data,
-							    ...incoming.data,
-								],
-							}
-						}
-					}
-				}
-			}
-		}
-	}),
+	cache: new InMemoryCache(),
 })
 
 ReactDOM.render(

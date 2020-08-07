@@ -2,6 +2,7 @@ import React, {
   useState,
   useEffect,
 } from "react"
+import {useHistory} from "react-router-dom"
 import Select from "react-select" // using deprecated API, watch https://github.com/JedWatson/react-select/issues/4094
 import {
   useQuery,
@@ -95,7 +96,8 @@ const TextArea = ({name, label, value, onChange}) => (
   </>
 )
 
-const Add = () => {
+const Add = ({handleRefetch}) => {
+  const history = useHistory()
   const [avatar_url, setAvatarUrl] = useState("")
   const [full_name, setFullName] = useState("")
   const [type_id, setType] = useState(undefined)
@@ -110,7 +112,7 @@ const Add = () => {
   }, [data])
 
   const [addHero] = useMutation(ADD_HERO)
-  const handleSubmit = e => {
+  const handleSubmit = (e) => {
     e.preventDefault()
     addHero({variables: {
       avatar_url,
@@ -118,6 +120,8 @@ const Add = () => {
       type_id,
       description
     }})
+    handleRefetch()
+    history.push("/")
   }
 
   return (
