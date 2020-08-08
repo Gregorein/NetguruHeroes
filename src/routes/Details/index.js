@@ -83,12 +83,14 @@ const Details = ({match, handleRefetch}) => {
 
 		    <p className={style.description}>{description}</p>
 
-		    <button
-			    className={style.deleteAction}
-			    onClick={handleDelete}
-			    >
-		    	<TrashIcon className={style.icon} />Delete hero
-	    	</button>
+		    <footer className={style.actions}>
+			    <button
+				    className={style.deleteAction}
+				    onClick={handleDelete}
+				    >
+			    	<TrashIcon className={style.icon} />Delete hero
+		    	</button>
+	    	</footer>
 		  </div>
 		</Modal>
 	)

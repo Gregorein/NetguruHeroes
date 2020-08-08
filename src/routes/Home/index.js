@@ -78,7 +78,7 @@ const Home = () => {
 					color="green"
 					autoWidth
 					>
-					<span className={style.icon}>+</span> Add hero
+					<span className={style.icon}>+</span>Add hero
 				</Button>
 				<Route path="/add" component={(props) => <Add handleRefetch={handleRefetch} {...props} />} />
 			</header>

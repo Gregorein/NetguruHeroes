@@ -4,15 +4,15 @@ import {Link} from "react-router-dom"
 import cn from "classnames"
 import style from "./style.module.scss"
 
-const Button =({color="default", type="button", bordered, autoWidth=false, to="/", onClick, children}) => type === "link" ? (
+const Button =({color="default", type="button", bordered, autoWidth=false, to="/", onClick, children, disabled}) => type === "link" ? (
 	<Link
 		className={cn(style.button, {
 			[style[color]]: color !== "default",
 			[style.bordered]: bordered,
 			[style.setWidth]: !autoWidth,
+			[style.disabled]: disabled,
 		})}
-		to={to}
-		onClick={onClick}
+		to={!disabled && to}
 		>
 		{children}
 	</Link>
@@ -21,9 +21,11 @@ const Button =({color="default", type="button", bordered, autoWidth=false, to="/
 		className={cn(style.button, {
 			[style[color]]: color !== "default",
 			[style.setWidth]: !autoWidth,
+			[style.disabled]: disabled,
 		})}
 		type={type}
 		onClick={onClick}
+		disabled={disabled}
 		>
 		{children}
 	</button>

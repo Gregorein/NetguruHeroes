@@ -40,16 +40,13 @@
 	.type,
 	.description {
 		display: flex;
-		flex: 3;
-		padding: 20px 0;
-		line-height: 35px;
 	}
 	.user {
-		padding-left: 20px;
-
 		.avatar {
+			flex-shrink: 0;
 			height: 35px;
 			width: 35px;
+
 			border-radius: 35px;
 			margin-right: 25px;
 
@@ -58,9 +55,7 @@
 			overflow: hidden;
 		}
 	}
-	.type {
-		flex: 2;
-	}
+
 	.description {
 		display: inline-block;
 		padding-right: 20px;
@@ -93,4 +88,53 @@
 @keyframes fakeContent {
   from {background-position: 200% 0;}
   to {background-position: 0 0;}
+}
+
+@media (min-width: $mobile) {
+	.item {
+		.user,
+		.type,
+		.description {
+			flex: 3;
+			padding: 20px 0;
+			line-height: 35px;
+		}
+		.user {
+			padding-left: 20px;
+		}
+		.type {
+			flex: 2;
+		}
+	}
+}
+@media (max-width: $mobile) {
+	.list {
+		.header {
+			display: none;
+		}
+	}
+
+	.item {
+		flex-direction: column;
+
+		padding: 20px;
+
+		.user {
+			height: 15px;
+
+			font-size: 15px;
+			font-weight: 700;
+		}
+		.type {
+			margin: 0 0 15px 60px;
+
+			font-size: 13px;
+			font-weight: 300;
+			line-height: 21px;
+		}
+		.description {
+			font-size: 13px;
+			font-weight: 300;
+		}
+	}
 }

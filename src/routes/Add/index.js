@@ -3,7 +3,11 @@ import React, {
   useEffect,
 } from "react"
 import {useHistory} from "react-router-dom"
-import Select from "react-select" // using deprecated API, watch https://github.com/JedWatson/react-select/issues/4094
+import {
+  TextInput,
+  SelectInput,
+  TextArea,
+} from "components/FormInputs"
 import {
   useQuery,
   useMutation,
@@ -47,69 +51,14 @@ const ADD_HERO = gql`
   }
   `
 
-const TextInput = ({name, label, value, onChange}) => (
-  <>
-    <label
-      className={style.label}
-      htmlFor={name}
-      children={label}
-      />
-    <input 
-      className={style.textInput}
-      type="text"
-      name={name}
-      value={value}
-      onChange={e => onChange(e.target.value)}
-      />    
-  </>
-)
-const SelectInput = ({name, label, onChange, ...otherProps}) => (
-  <>
-    <label
-      className={style.label}
-      htmlFor={name}
-      children={label}
-      />
-    <Select
-      className={style.selectInput}
-      classNamePrefix="selectInput"
-      name={name}
-      onChange={e => onChange(e.value)}
-      {...otherProps}
-      />    
-  </>
-)
-const TextArea = ({name, label, value, onChange}) => (
-  <>
-    <label
-      className={style.label}
-      htmlFor={name}
-      children={label}
-      />
-    <textarea 
-      className={style.textInput}
-      type="text"
-      name={name}
-      value={value}
-      onChange={e => onChange(e.target.value)}
-      />    
-  </>
-)
-
 const Add = ({handleRefetch}) => {
   const history = useHistory()
   const [avatar_url, setAvatarUrl] = useState("")
   const [full_name, setFullName] = useState("")
   const [type_id, setType] = useState(undefined)
-  const [types, setTypes] = useState([])
   const [description, setDescription] = useState("")
 
-  const {data} = useQuery(TYPES, {
-    fetchPolicy: "cache-and-network",
-  })
-  useEffect(() => {
-    if (data) setTypes([...data.types])
-  }, [data])
+  const {data} = useQuery(TYPES)
 
   const [addHero] = useMutation(ADD_HERO)
   const handleSubmit = (e) => {
@@ -123,6 +72,12 @@ const Add = ({handleRefetch}) => {
     handleRefetch()
     history.push("/")
   }
+  const disabled = (
+    avatar_url === "" ||
+    full_name === "" ||
+    type_id === undefined ||
+    description === ""
+  )
 
   return (
     <Modal
@@ -155,7 +110,8 @@ const Add = ({handleRefetch}) => {
         <SelectInput
           name="type"
           label="Type"
-          options={types}
+          options={data ? data.types : []}
+          value={type_id}
           onChange={setType}
           placeholder="Select type"
           />
@@ -167,12 +123,15 @@ const Add = ({handleRefetch}) => {
           onChange={setDescription}
           />
 
-        <Button
-          color="green"
-          type="submit"
-          children="Save"
-          autoWidth
-          />
+        <footer className={style.actions}>
+          <Button
+            color="green"
+            type="submit"
+            children="Save"
+            autoWidth
+            disabled={disabled}
+            />
+        </footer>
       </form>
     </Modal>
   )

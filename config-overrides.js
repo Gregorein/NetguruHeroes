@@ -10,5 +10,6 @@ module.exports = override(
     icons: path.resolve(__dirname, "./src/assets/icons"),
     routes: path.resolve(__dirname, "./src/routes"),
     components: path.resolve(__dirname, "./src/components"),
+    globals: path.resolve(__dirname, "src/globals.js"),
   }),
 )

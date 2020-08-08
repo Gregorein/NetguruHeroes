@@ -2,7 +2,6 @@
 
 .container {
 	display: flex;
-	min-height: 250px;
 	flex-direction: column;
 	align-items: center;
 	&.center {
@@ -34,6 +33,12 @@
 		font-weight: 300;
 		line-height: 21px;
 	}
+
+  .actions {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+  }
 
 	.deleteAction {
 		transition: color $t $e,
@@ -67,5 +72,20 @@
 		}
 
 		cursor: pointer;
+	}
+}
+
+@media (min-width: $mobile) {
+	.container {
+		min-height: 250px;
+	}
+}
+@media (max-width: $mobile) {
+	.container {
+		flex: 1;
+	}
+	.actions {
+		justify-content: flex-end;
+		flex: 1;
 	}
 }
