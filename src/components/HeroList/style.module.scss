@@ -24,11 +24,17 @@
 }
 
 .item {
+	transition: background $t $e,
+							color $t $e;
+
 	display: flex;
 	margin-bottom: 7px;
 
 	border-radius: $br;
 	background: $white;
+
+	color: $black;
+	text-decoration: none;
 
 	.user,
 	.type,
@@ -62,6 +68,12 @@
 		white-space: nowrap; 
 		overflow: hidden;
 		text-overflow: ellipsis;
+	}
+
+	&.link:hover {
+		color: $blue;
+
+		background: transparentize($blue , 0.85);
 	}
 }
 

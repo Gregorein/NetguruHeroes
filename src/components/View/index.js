@@ -1,7 +1,6 @@
 import React, {useEffect} from "react"
 
 import cn from "classnames"
-
 import style from "./style.module.scss"
 
 const View = ({title, className, children}) => {

@@ -6,7 +6,6 @@ import React, {
 import Loader from "components/Loader"
 
 import cn from "classnames"
-
 import style from "./style.module.scss"
 
 const LoaderImage = ({className, url, alt=""}) => {

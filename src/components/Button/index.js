@@ -2,7 +2,6 @@ import React from "react"
 import {Link} from "react-router-dom"
 
 import cn from "classnames"
-
 import style from "./style.module.scss"
 
 const Button =({color="default", type="button", bordered, autoWidth=false, to="/", onClick, children}) => type === "link" ? (

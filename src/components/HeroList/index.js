@@ -4,7 +4,6 @@ import HeroListItem from "./HeroListItem"
 import HeroFakeItem from "./HeroFakeItem"
 
 import cn from "classnames"
-
 import style from "./style.module.scss"
 
 const HeroList = ({list=[], fakeItem=false}) => {

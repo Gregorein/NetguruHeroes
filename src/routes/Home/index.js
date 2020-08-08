@@ -10,6 +10,7 @@ import Button from "components/Button"
 import HeroList from "components/HeroList"
 
 import Add from "routes/Add"
+import Details from "routes/Details"
 
 import style from "./style.module.scss"
 
@@ -21,6 +22,7 @@ const HEROES = gql`
 		heroes(first: $first, skip: $skip) {
 			total_count
 			data {
+				id
 				avatar_url
 				full_name
 				type {
@@ -87,6 +89,7 @@ const Home = () => {
 						<Button onClick={handleLoadMore} children={"Load more"} />
 					</footer>
 				)}
+				<Route path="/details/:id" component={Details} />
 			</main>
 		</View>
 	)
