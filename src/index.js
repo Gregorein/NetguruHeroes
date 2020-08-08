@@ -4,7 +4,7 @@ import {ApolloClient, ApolloProvider, InMemoryCache} from "@apollo/client"
 
 import App from "./App"
 
-import "./styles/index.scss"
+import "styles/index.scss"
 // import * as serviceWorker from "./serviceWorker"
 
 const client = new ApolloClient({

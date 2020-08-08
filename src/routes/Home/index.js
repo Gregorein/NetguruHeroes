@@ -89,7 +89,7 @@ const Home = () => {
 						<Button onClick={handleLoadMore} children={"Load more"} />
 					</footer>
 				)}
-				<Route path="/details/:id" component={Details} />
+				<Route path="/details/:id"  component={(props) => <Details handleRefetch={handleRefetch} {...props} />} />
 			</main>
 		</View>
 	)

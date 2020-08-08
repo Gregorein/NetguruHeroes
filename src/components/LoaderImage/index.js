@@ -16,6 +16,10 @@ const LoaderImage = ({className, url, alt=""}) => {
 		toggleLoaded(false)
 		img.src = url
 		img.onload = () => toggleLoaded(true)
+
+		return () => {
+			img.src = null
+		}
 	}, [url, img.onload, img.src])
 
 	return (
