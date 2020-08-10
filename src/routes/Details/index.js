@@ -15,7 +15,7 @@ import TrashIcon from "icons/Trash"
 import cn from "classnames"
 import style from "./style.module.scss"
 
-const ADD_HERO = gql`
+export const GET_HERO = gql`
 	query Hero($id: ID!) {
 	  hero: hero(id: $id) {
 			avatar_url
@@ -27,7 +27,7 @@ const ADD_HERO = gql`
 	  }
 	}
 	`
-const DELETE_HERO = gql`
+export const DELETE_HERO = gql`
 	mutation deleteHero($id: ID!) {
 		deleteHero(id: $id) {
 			id
@@ -37,7 +37,7 @@ const DELETE_HERO = gql`
 
 const Details = ({match, handleRefetch}) => {
   const history = useHistory()
-	const {data} = useQuery(ADD_HERO, {
+	const {data} = useQuery(GET_HERO, {
 		variables: {
 			id: match.params.id,
 		},
