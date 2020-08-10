@@ -17,7 +17,7 @@ import Details from "routes/Details"
 
 import style from "./style.module.scss"
 
-const HEROES = gql`
+export const GET_HEROES = gql`
 	query Heroes(
 		$first: Int
 		$skip: Int
@@ -38,7 +38,7 @@ const HEROES = gql`
 	`
 
 const Home = () => {
-	const {loading, error, data, fetchMore, refetch} = useQuery(HEROES, {
+	const {loading, error, data, fetchMore, refetch} = useQuery(GET_HEROES, {
 		variables: {
 			first: 10,
 			skip: 0
