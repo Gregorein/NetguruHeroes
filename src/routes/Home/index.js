@@ -7,7 +7,10 @@ import {
 
 import View from "components/View"
 import Button from "components/Button"
+import Loader from "components/Loader"
 import HeroList from "components/HeroList"
+
+import ErrorIcon from "icons/Error"
 
 import Add from "routes/Add"
 import Details from "routes/Details"
@@ -35,7 +38,7 @@ const HEROES = gql`
 	`
 
 const Home = () => {
-	const {data, fetchMore, refetch} = useQuery(HEROES, {
+	const {loading, error, data, fetchMore, refetch} = useQuery(HEROES, {
 		variables: {
 			first: 10,
 			skip: 0
@@ -72,24 +75,39 @@ const Home = () => {
 	return (
 		<View title="Netguru Heroes" className={style.container}>
 			<header className={style.header}>
-				<Button
-					type="link"
-					to="/add"
-					color="green"
-					autoWidth
-					>
-					<span className={style.icon}>+</span>Add hero
-				</Button>
-				<Route path="/add" component={(props) => <Add handleRefetch={handleRefetch} {...props} />} />
+				{loading && (
+					<p className={style.loading}>
+						<Loader />
+						<span className={style.text}>Connecting to API...</span>
+					</p>
+				)}
+				{error && (
+					<p className={style.error}>
+						<ErrorIcon className={style.icon} />
+						<span className={style.text}>Can't connect to API – please try again later...</span>
+					</p>
+				)}
+				{!(loading || error) && (
+					<Button
+						type="link"
+						to="/add"
+						color="green"
+						autoWidth
+						disabled={loading || error}
+						>
+						<span className={style.icon}>+</span>Add hero
+					</Button>
+				)}
+				{!error && <Route path="/add" component={(props) => <Add handleRefetch={handleRefetch} {...props} />} />}
 			</header>
 			<main className={style.list}>
-				<HeroList list={data ? data.heroes.data : []} fakeItem={1} />
+				<HeroList list={data ? data.heroes.data : []} fakeItem={3} />
 				{visible && (
 					<footer className={style.footer}>
 						<Button onClick={handleLoadMore} children={"Load more"} />
 					</footer>
 				)}
-				<Route path="/details/:id"  component={(props) => <Details handleRefetch={handleRefetch} {...props} />} />
+				{!error && <Route path="/details/:id"  component={(props) => <Details handleRefetch={handleRefetch} {...props} />} />}
 			</main>
 		</View>
 	)

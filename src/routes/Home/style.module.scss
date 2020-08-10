@@ -8,12 +8,37 @@
 }
 
 .header {
+	display: flex;
+
 	.icon {
 		display: inline-block;
 		margin-right: 5px;
 		
 		font-size: 15px;
 		color: 13px;
+	}
+
+	.loading,
+	.error {
+		display: flex;
+		height: 35px;
+
+		.text {
+			margin-left: 15px;
+			line-height: 35px;
+		}
+	}
+	.loading {
+		color: $gray;
+	}
+	.error {
+		color: $red;
+		font-weight: 700;
+
+		.icon {
+			height: 35px;
+			width: 35px;
+		}
 	}
 }
 
@@ -42,6 +67,10 @@
 	}
 	.header {		
 		padding: 25px 0;
+
+		.loading,
+		.error {
+		}
 	}
 	.list {
 		flex: 1;
@@ -53,7 +82,6 @@
 }
 @media (max-width: $mobile) {
 	.header {
-		display: flex;
 		flex-direction: column;
 		padding: 20px 0;
 	}

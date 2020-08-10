@@ -114,12 +114,10 @@
       font-size: 13px;
       font-weight: 500;
     }
-
     &__single-value {
       color: $dark;
       font-size: 13px;
       font-weight: 500;
-
     }
 
     &__menu {
@@ -151,6 +149,27 @@
     &__option--is-selected {
       color: $white;
       background: $blue;
+    }
+  }
+  &.error :global(.selectInput) {
+    &__control {
+      box-shadow: 0 0 0 transparentize($red, 1);
+
+      background: transparentize($red, 0.85);
+      &:hover {
+        border-color: transparentize($red, 0.5);
+      }
+    }
+    &__control--is-focused {
+      border-color: $red;
+      box-shadow: 0 0 5px transparentize($red, 0.5);
+
+      &:hover {
+        border-color: $red;
+      }
+    }
+    &__placeholder {
+      color: transparentize($red, 0.5);
     }
   }
 }

@@ -2,7 +2,7 @@ import React, {
   useState,
   useEffect,
 } from "react"
-import Select from "react-select" // using deprecated API, watch https://github.com/JedWatson/
+import Select from "react-select" // using deprecated API, watch https://github.com/JedWatson/react-select/issues/4094#issuecomment-651170749also
 
 import {useDebounce} from "globals"
 
@@ -12,14 +12,15 @@ import style from "./style.module.scss"
 const GenericInput = ({value, name, label, input: Input, onChange, ...otherProps}) => {
   const [error, setError] = useState(false)
   const [canDebounce, setCanDebounce] = useState(false)
-  const debouncedValue = useDebounce(value, 500)
+  const debouncedValue = useDebounce(value, 200)
   useEffect(() => {
     if (!debouncedValue && canDebounce) {
       setError("This field cannot be empty")
     } else {
       setError(false)
     }
-  }, [debouncedValue])
+  // eslint-disable-next-line react-hooks/exhaustive-deps    
+  }, [debouncedValue]) // ignoring exhaustive-deps, input will now wait until change comes from value prop
   const permitDebounce = () => setCanDebounce(true)
 
   return (
@@ -88,19 +89,41 @@ export const TextArea = ({name, label, value, onChange}) => (
     />
 )
 
-export const SelectInput = ({name, label, onChange, ...otherProps}) => (
-  <div className={style.input}>
-    <label
-      className={style.label}
-      htmlFor={name}
-      children={label}
-      />
-    <Select
-      className={style.selectInput}
-      classNamePrefix="selectInput"
-      name={name}
-      onChange={e => onChange(e.value)}
-      {...otherProps}
-      />
-  </div>
-)
+export const SelectInput = ({name, label, onChange, value, ...otherProps}) => {
+  const [error, setError] = useState(false)
+  const [canDebounce, setCanDebounce] = useState(false)
+  const debouncedValue = useDebounce(value, 200)
+  useEffect(() => {
+    if (!debouncedValue && canDebounce) {
+      setError("This field cannot be empty")
+    } else {
+      setError(false)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps    
+  }, [debouncedValue]) // ignoring exhaustive-deps, input will now wait until change comes from value prop
+  const permitDebounce = () => setCanDebounce(true)
+
+  return (
+    <div className={style.input}>
+      <label
+        className={cn(style.label, {
+          [style.error]: error,
+        })}
+        htmlFor={name}
+        children={label}
+        />
+      <Select
+        className={cn(style.selectInput, {
+          [style.error]: error,
+        })}
+        classNamePrefix="selectInput"
+        name={name}
+        onChange={e => onChange(e ? e.value : undefined)}
+        onBlur={permitDebounce}
+        isClearable
+        {...otherProps}
+        />
+      {error && <p className={style.errorText}>{error}</p>}
+    </div>
+  )
+}
