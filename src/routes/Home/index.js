@@ -1,4 +1,7 @@
-import React from "react"
+import React, {
+	useState,
+	useEffect,
+} from "react"
 import {Route} from "react-router-dom"
 import {
 	useQuery,
@@ -38,12 +41,16 @@ export const GET_HEROES = gql`
 	`
 
 const Home = () => {
+	const [heroes, setHeroes] = useState([])
 	const {loading, error, data, fetchMore, refetch} = useQuery(GET_HEROES, {
 		variables: {
-			first: 10,
+			first: 5,
 			skip: 0
 		},
 	})
+	useEffect(() => {
+		data && setHeroes(data.heroes.data)
+	}, [data])
 	const handleLoadMore = () => fetchMore({
 		variables: {
 			skip: data.heroes.data.length
@@ -63,11 +70,15 @@ const Home = () => {
 		},
 	})
 	const handleRefetch = () => {
-		refetch({
-			variables: {
-				skip: 0
-			}
-		})
+		setHeroes([])
+
+		setTimeout(() => {
+			refetch({
+				variables: {
+					skip: 0
+				}
+			})
+		}, 200)
 	}
 
 	const visible = data && data.heroes.total_count > data.heroes.data.length
@@ -101,7 +112,7 @@ const Home = () => {
 				{!error && <Route path="/add" component={(props) => <Add handleRefetch={handleRefetch} {...props} />} />}
 			</header>
 			<main className={style.list}>
-				<HeroList list={data ? data.heroes.data : []} fakeItem={3} />
+				<HeroList list={heroes} fakeItem={1} />
 				{visible && (
 					<footer className={style.footer}>
 						<Button onClick={handleLoadMore} children={"Load more"} />
