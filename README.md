@@ -13,6 +13,8 @@ Installs all dependencies for the app.
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser, if it didn't open automatically. 
 
+## Extras
+
 Packaged with webpack hotreload and linters. Husky and prettier weren't included, as I don't have a config for them that will suit my code style.
 
 ### `yarn test`
