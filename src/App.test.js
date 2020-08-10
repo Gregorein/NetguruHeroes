@@ -1,5 +1,5 @@
 import React from "react"
-import ReactDOM from "react-dom"
+import {render} from "@testing-library/react"
 import {MockedProvider} from "@apollo/client/testing"
 
 import App from "./App"
@@ -18,10 +18,9 @@ const mocks = [
 ]
 
 test("renders without crashing", () => {
-  const div = document.createElement("div")
-  ReactDOM.render(
+  render(
     <MockedProvider mocks={mocks} addTypename={false}>
       <App />
     </MockedProvider>
-  , div)
+  )
 })
